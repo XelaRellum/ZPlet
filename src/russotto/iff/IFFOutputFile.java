@@ -30,9 +30,7 @@ public class IFFOutputFile
 
     private byte[] getOSType(String s)
     {
-		byte result[] = new byte[4];
-		s.getBytes(0, 4, result, 0);
-		return result;
+		return IFFChunk.fromString(s);
     }
 
     public synchronized void openChunk(String type) throws IOException

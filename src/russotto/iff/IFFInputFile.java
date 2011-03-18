@@ -26,7 +26,7 @@ public class IFFInputFile
     	
     	read(chunktype, 0, 4);
     	chunkbegin = getFilePointer();
-    	result.chunktype = new String(chunktype, 0);
+    	result.chunktype = IFFChunk.toString(chunktype);
     	result.chunklength = readInt();
 		openchunks.push(chunkbegin);
 		openchunkends.push(getFilePointer() + result.chunklength);
@@ -60,7 +60,7 @@ public class IFFInputFile
      	else {
 //     		throw new Exception("That's not a FORM!");
      	}
-     	return new String(subtype, 0);
+     	return IFFChunk.toString(subtype);
      }
 
     public synchronized void closeChunk() throws IOException {
@@ -85,4 +85,5 @@ public class IFFInputFile
 		}
 		super.close();
     }
+    
 }

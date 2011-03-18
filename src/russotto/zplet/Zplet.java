@@ -15,6 +15,10 @@ import russotto.zplet.zmachine.zmachine5.ZMachine5;
 import russotto.zplet.zmachine.zmachine5.ZMachine8;
 
 public class Zplet extends java.applet.Applet {
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 		ZScreen screen;
 		ZStatus status_line;
 		ZMachine zm;
@@ -169,7 +173,7 @@ public class Zplet extends java.applet.Applet {
 
 		public void destroy() {
 		    if (zm != null)
-				zm.stop();
+				zm.request_stop();
 			zm = null;
 			remove(screen);
 			screen = null;

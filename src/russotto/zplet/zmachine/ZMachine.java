@@ -10,6 +10,7 @@ import russotto.zplet.screenmodel.*;
 import russotto.zplet.zmachine.state.ZState;
 
 public abstract class ZMachine extends Thread {
+	private volatile boolean terminate = false;
 	public ZWindow current_window;
 	public int pc;
 	public ZWindow window[];
@@ -306,16 +307,21 @@ public abstract class ZMachine extends Thread {
 	}
 
 	public void start() {
+				terminate = false;
 				screen.clear();
 				restart();
 				header.set_transcripting(false);
 				super.start();
 	}
+	
+	public void request_stop() {
+				terminate = true;
+	}
 
 	public void run()
 	{
 				try {
-					while (true) {
+					while (!terminate) {
 //								System.err.print("pc = ");
 //								System.err.println(Integer.toString(pc, 16));
 								zi.decode_instruction();

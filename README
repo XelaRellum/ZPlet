@@ -1,0 +1,7 @@
+Hello Sailor!
+
+This is the open source version of ZPlet.  Run make in ./src to create
+the ZPlet class file in ./classes.
+
+Ant users need a working copy of Ant found at http://jakarta.apache.org/ and
+build using the build.xml

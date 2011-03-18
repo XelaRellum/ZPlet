@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<!-- You can download Ant from http://jakarta.apache.org/ -->
+
+<!-- A note to Kaffe users:
+  You must have a copy of Sun's tools.jar because Kaffe's tools.jar is not Ant
+  compatable. Also Kaffe's compression classes have a bug so zip compression
+  needs to be turned off. -->
+
+<project name="ZPlet" basedir="." default="compile">
+  <!-- set global properties for this build -->
+  <property name="src" value="src"/>
+  <property name="build" value="classes"/>
+  <property name="dist"  value="dist"/>
+  <property name="zip.compression" value="true"/>
+
+  <!-- Define what files and directories to include in a srcdist build -->
+  <fileset id="dist.include" dir="${basedir}">
+    <include name="LICENSE"/>
+    <include name="README"/>
+    <include name="build.xml"/>
+    <include name="src/**"/>
+  </fileset>
+
+  <target name="init">
+    <!-- Set zip.compression tests for Kaffe. -->
+    <available property="zip.compression" value="false"
+               classname="kaffe.lang.Application"/>
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${build}"/>
+  </target>
+
+  <target name="dist" depends="compile">
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="${dist}/${ant.project.name}-${DSTAMP}.jar" basedir="${build}"
+         compress="${zip.compression}"/>
+  </target>
+
+  <target name="clean">
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+
+  <target name="srcdist" depends="init">
+      <zip zipfile="${dist}/${ant.project.name}-${DSTAMP}-src.zip"
+           compress="${zip.compression}">
+        <fileset refid="dist.include"/>
+      </zip>
+  </target>
+
+  <target name="alldist" depends="dist,srcdist">
+  </target>
+</project>

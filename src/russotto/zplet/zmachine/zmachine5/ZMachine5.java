@@ -5,11 +5,6 @@
 
 package russotto.zplet.zmachine.zmachine5;
 
-import java.util.*;
-import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
 import russotto.zplet.zmachine.*;
 import russotto.zplet.screenmodel.ZScreen;
 import russotto.zplet.screenmodel.ZWindow;

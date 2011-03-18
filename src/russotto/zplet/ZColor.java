@@ -5,11 +5,7 @@
 
 package russotto.zplet;
 
-import java.util.*;
 import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
 
 public class ZColor {
 	public final static int Z_CURRENT = 0;

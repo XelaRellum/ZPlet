@@ -5,11 +5,6 @@
 
 package russotto.zplet.zmachine.zmachine5;
 
-import java.util.*;
-import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
 import russotto.zplet.zmachine.ZMachine;
 import russotto.zplet.zmachine.ZDictionary;
 
@@ -125,7 +120,6 @@ public class ZDictionary5 extends ZDictionary{
 		public void tokenise(int textloc, int textlength, int parseloc, boolean parseunknown) {
 				int wordloc, wordlength;
 				int textleft = textlength;
-				int dictloc;
 				char ch;
 				boolean pbfull;
 

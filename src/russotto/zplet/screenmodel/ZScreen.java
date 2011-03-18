@@ -7,9 +7,6 @@ package russotto.zplet.screenmodel;
 
 import java.util.*;
 import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
 import russotto.zplet.ZColor;
 
 public class ZScreen extends Canvas {
@@ -20,7 +17,7 @@ public class ZScreen extends Canvas {
 		Font variablefont;
 		Font graphicsfont;
 		SyncVector inputcodes;
-		Vector bufferedcodes;
+		Vector<Integer> bufferedcodes;
 		boolean bufferdone;
 		ZWindow inputwindow;
 		ZCursor inputcursor;
@@ -118,7 +115,7 @@ public class ZScreen extends Canvas {
 				lines = mysize.height / fixedmetrics.getHeight();
 
 				inputcodes = new SyncVector();
-				bufferedcodes = new Vector();
+				bufferedcodes = new Vector<Integer>();
 				inputcursor = new ZCursor(this);
 				setForeground(ZColor.getcolor(zforeground));
 				setBackground(ZColor.getcolor(zbackground));
@@ -261,7 +258,6 @@ public class ZScreen extends Canvas {
 		public short read_buffered_code() { /* should really be synched */
 						   Integer thecode;
 				int incode;
-				short result;
 				int cw, ch;
 
 				inputwindow.flush();
@@ -329,9 +325,6 @@ public class ZScreen extends Canvas {
 
 		public synchronized void reshape(int x, int y, int width, int height) {
 				int lines;
-				int i;
-				char newbuffer[][];
-
 				if ((width >= 0) && (height >= 0)) {
 						lines = height / fixedmetrics.getHeight();
 						chars = width / fixedmetrics.charWidth(' ');
@@ -362,9 +355,7 @@ public class ZScreen extends Canvas {
 		setFixedFont( String font_family, int font_size )
 		{
 		    if (font_size <= 0)
-		    {
-			font_size = this.DEFAULT_FONT_SIZE;
-		    }
+		    	font_size = DEFAULT_FONT_SIZE;
 		    this.fixedfont = new Font(font_family, Font.PLAIN, font_size);
 		}
 
@@ -387,8 +378,6 @@ public class ZScreen extends Canvas {
 		public synchronized void settext(int y, int x, char newtext[],
 																		 int offset, int length, boolean reverse,
 																		 Font textfont) {
-				int i;
-				char newbuffer[];
 				Graphics g;
 
 				try {
@@ -430,8 +419,6 @@ public class ZScreen extends Canvas {
 		}
 		
 		public synchronized void scrollLines(int top, int height, int lines) {
-				int j;
-				Graphics g;
 				int texttop;
 
 //				System.err.println("scrollLines top height lines "
@@ -457,9 +444,6 @@ public class ZScreen extends Canvas {
 		}
 		
 		public synchronized void paint(Graphics g) {
-				int y;
-				int ypixels;
-
 //				super.paint(g);
 //				System.err.println("paint");
 				g.drawImage(backing_store, 0, 0, null);

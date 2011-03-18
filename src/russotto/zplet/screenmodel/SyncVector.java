@@ -6,12 +6,8 @@
 package russotto.zplet.screenmodel;
 
 import java.util.*;
-import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
 
-class SyncVector extends Vector {
+class SyncVector extends Vector<Object> {
 	public SyncVector() {
 		super();
 	}

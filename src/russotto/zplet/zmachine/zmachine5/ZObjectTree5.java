@@ -5,11 +5,6 @@
 
 package russotto.zplet.zmachine.zmachine5;
 
-import java.util.*;
-import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
 import russotto.zplet.zmachine.ZMachine;
 import russotto.zplet.zmachine.ZObjectTree;
 
@@ -148,8 +143,6 @@ public class ZObjectTree5 extends ZObjectTree
 
 		public short prop_address(short object, short propnum) {
 				int entry_address = prop_entry_address(object, propnum);
-				int sizebyte;
-
 				if (entry_address == 0)
 						return 0;
 				if ((zm.memory_image[entry_address]&0x80) == 0x80)

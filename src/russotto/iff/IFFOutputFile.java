@@ -1,6 +1,5 @@
 package russotto.iff;
 import java.io.*;
-import java.util.*;
 
 public class IFFOutputFile
 		extends IFFFile

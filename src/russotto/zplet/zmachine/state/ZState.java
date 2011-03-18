@@ -7,9 +7,7 @@ package russotto.zplet.zmachine.state;
 
 import java.util.*;
 import java.awt.*;
-import java.net.*;
 import java.io.*;
-import java.applet.Applet;
 import russotto.iff.*;
 import russotto.zplet.zmachine.ZMachine;
 import russotto.zplet.zmachine.ZHeader;
@@ -22,7 +20,7 @@ public class ZState {
 	final static short QUETZAL_PROCEDURE = 0x10;
 
 	ZMachine zm;
-	Stack zstack;
+	Stack<Object> zstack;
 	public ZHeader header;
 	int pc;
 	byte dynamic[];
@@ -40,7 +38,7 @@ public class ZState {
 		dyn_size = header.static_base();
 /* clones the stack but not the Integers within.  Fortunately they are
 immutable.	But the arrays aren't, so don't mess with them */
-		zstack = (Stack)zm.zstack.clone();
+		zstack = (Stack<Object>)zm.zstack.clone();
 		dynamic = new byte[dyn_size];
 		System.arraycopy(zm.memory_image, 0, dynamic, 0, dyn_size);
 		locals = new short[zm.locals.length];
@@ -55,7 +53,7 @@ immutable.	But the arrays aren't, so don't mess with them */
 		System.arraycopy(dynamic, 0, zm.memory_image, 0, dynamic.length);
 		zm.locals = new short[locals.length];
 		System.arraycopy(locals, 0, zm.locals, 0, locals.length);
-		zm.zstack = (Stack)zstack.clone();
+		zm.zstack = (Stack<Object>)zstack.clone();
 		zm.pc = pc;
 		if (header.version() > 3)
 			((ZMachine5)zm).argcount = argcount;
@@ -198,7 +196,7 @@ immutable.	But the arrays aren't, so don't mess with them */
 				infile.seek(ifhdend);
 				/* read the stacks */
 				chunkinfo = infile.skipToChunk("Stks");
-				zstack = new Stack();
+				zstack = new Stack<Object>();
 				
 				frameno = 0;
 				while (infile.getChunkPointer() < chunkinfo.chunklength) {
@@ -342,7 +340,7 @@ immutable.	But the arrays aren't, so don't mess with them */
 	
 	public boolean disk_save(Frame parentframe, int save_pc) {
 		String fname;
-		Enumeration e,f;
+		Enumeration<Object> e,f;
 		Object el, el2;
 		int i;
 		IFFOutputFile outfile = null;
@@ -365,9 +363,9 @@ immutable.	But the arrays aren't, so don't mess with them */
 				
 			outfile = new IFFOutputFile(fname, "IFZS");
 			outfile.openChunk("IFhd");
-			outfile.write(zm.memory_image, header.RELEASE, 2);
-			outfile.write(zm.memory_image, header.SERIAL_NUMBER, 6);
-			outfile.write(zm.memory_image, header.FILE_CHECKSUM, 2);
+			outfile.write(zm.memory_image, ZHeader.RELEASE, 2);
+			outfile.write(zm.memory_image, ZHeader.SERIAL_NUMBER, 6);
+			outfile.write(zm.memory_image, ZHeader.FILE_CHECKSUM, 2);
 			outfile.writeByte((save_pc&0xFF0000) >>> 16);
 			outfile.writeShort(save_pc&0xFFFF);
 			outfile.closeChunk();

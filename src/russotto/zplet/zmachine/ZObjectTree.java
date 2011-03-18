@@ -5,12 +5,6 @@
 
 package russotto.zplet.zmachine;
 
-import java.util.*;
-import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
-
 public abstract class ZObjectTree {
 	protected ZMachine zm;
 	protected int object_table;

@@ -5,18 +5,18 @@ import java.util.*;
 public class IFFInputFile
 		extends IFFFile
 {
-	private Stack openchunkends;
+	private Stack<Long> openchunkends;
 	
     public IFFInputFile(File file) throws IOException
     {
 		super(file, "r");
-		openchunkends = new Stack();
+		openchunkends = new Stack<Long>();
     }
     
     public IFFInputFile(String name) throws IOException
     {
 		super(name, "r");
-		openchunkends = new Stack();
+		openchunkends = new Stack<Long>();
     }
     
     public synchronized IFFChunkInfo readChunkInfo() throws IOException {
@@ -28,8 +28,8 @@ public class IFFInputFile
     	chunkbegin = getFilePointer();
     	result.chunktype = new String(chunktype, 0);
     	result.chunklength = readInt();
-		openchunks.push(new Long(chunkbegin));
-		openchunkends.push(new Long(getFilePointer() + result.chunklength));
+		openchunks.push(chunkbegin);
+		openchunkends.push(getFilePointer() + result.chunklength);
 		
 		return result;
     }
@@ -37,12 +37,12 @@ public class IFFInputFile
     public synchronized IFFChunkInfo skipToChunk(String type) throws IOException, IFFChunkNotFoundException {
     	IFFChunkInfo chunkinfo;
 
-		if (getFilePointer() >= ((Long)openchunkends.peek()).longValue())
+		if (getFilePointer() >= (openchunkends.peek()).longValue())
 			throw new IFFChunkNotFoundException("Chunk " + type + " not found at current level");
 		chunkinfo = readChunkInfo();
 		while (!chunkinfo.chunktype.equals(type)) {
 			closeChunk();
-			if (getFilePointer() >= ((Long)openchunkends.peek()).longValue())
+			if (getFilePointer() >= (openchunkends.peek()).longValue())
 				throw new IFFChunkNotFoundException("Chunk " + type + " not found at current level");
 			chunkinfo = readChunkInfo();
 		}
@@ -66,7 +66,7 @@ public class IFFInputFile
     public synchronized void closeChunk() throws IOException {
     	long chunkend;
     	
-    	chunkend = (((Long)openchunkends.pop()).longValue() + 1) & ~1L;
+    	chunkend = ((openchunkends.pop()).longValue() + 1) & ~1L;
     	openchunks.pop();
     	// doing the seek last ensures exceptions leave stacks consistent
     	seek(chunkend);

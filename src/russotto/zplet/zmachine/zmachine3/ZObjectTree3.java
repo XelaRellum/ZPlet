@@ -5,11 +5,6 @@
 
 package russotto.zplet.zmachine.zmachine3;
 
-import java.util.*;
-import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
 import russotto.zplet.zmachine.ZObjectTree;
 import russotto.zplet.zmachine.ZMachine;
 

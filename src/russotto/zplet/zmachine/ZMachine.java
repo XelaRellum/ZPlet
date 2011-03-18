@@ -6,10 +6,6 @@
 package russotto.zplet.zmachine;
 
 import java.util.*;
-import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
 import russotto.zplet.screenmodel.*;
 import russotto.zplet.zmachine.state.ZState;
 
@@ -24,7 +20,7 @@ public abstract class ZMachine extends Thread {
 	public ZState restart_state;
 	protected ZStatus status_line;
 	public byte memory_image[];
-	public Stack zstack;
+	public Stack<Object> zstack;
 	public Random zrandom;
 	protected int globals;
 	public short locals[];
@@ -52,7 +48,7 @@ public abstract class ZMachine extends Thread {
 				this.status_line = status_line;
 				this.memory_image = memory_image;
 				locals = new short[0];
-				zstack = new Stack();
+				zstack = new Stack<Object>();
 				restart_state = new ZState(this);
 				restart_state.save_current();
 				zrandom = new Random(); /* starts in "random" mode */
@@ -421,7 +417,6 @@ public abstract class ZMachine extends Thread {
 	}
 	
 	public short get_operand(int optype) {
-				short operand;
 				switch (optype) {
 				case OP_SMALL:
 					return (short)(get_code_byte() & 0xFF);

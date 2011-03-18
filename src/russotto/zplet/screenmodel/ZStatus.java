@@ -5,11 +5,7 @@
 
 package russotto.zplet.screenmodel;
 
-import java.util.*;
 import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
 
 public class ZStatus extends Panel {
 		 boolean timegame;

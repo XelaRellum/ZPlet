@@ -5,11 +5,9 @@
 
 package russotto.zplet;
 
-import java.util.*;
 import java.awt.*;
 import java.net.*;
 import java.io.*;
-import java.applet.Applet;
 import russotto.zplet.screenmodel.*;
 import russotto.zplet.zmachine.*;
 import russotto.zplet.zmachine.zmachine3.ZMachine3;
@@ -26,8 +24,6 @@ public class Zplet extends java.applet.Applet {
 		public void init() {
 			String statusfg, statusbg, mainfg, mainbg;
 			String font_family, font_size;
-			Component parent;
-			
 			statusfg = getParameter("StatusForeground");
 			statusbg = getParameter("StatusBackground");
 			mainfg = getParameter("Foreground");

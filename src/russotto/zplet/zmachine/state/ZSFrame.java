@@ -5,12 +5,7 @@
 
 package russotto.zplet.zmachine.state;
 
-import java.util.*;
 import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
-import russotto.iff.*;
 
 class ZSFrame extends Frame {
 	FileDialog fd;

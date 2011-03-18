@@ -5,11 +5,6 @@
 
 package russotto.zplet.zmachine;
 
-import java.util.*;
-import java.awt.*;
-import java.net.*;
-import java.io.*;
-import java.applet.Applet;
 import russotto.zplet.zmachine.state.ZState;
 
 public class ZInstruction {
@@ -197,19 +192,19 @@ public class ZInstruction {
 
 					while (optypebytes-- != 0) {
 								optype = (optypes & 0xC0)>>6;
-								if (optype == zm.OP_OMITTED)
+								if (optype == ZMachine.OP_OMITTED)
 									break;
 								operands[count++] = zm.get_operand(optype);
 								optype = (optypes & 0x30)>>4;
-								if (optype == zm.OP_OMITTED)
+								if (optype == ZMachine.OP_OMITTED)
 									break;
 								operands[count++] = zm.get_operand(optype);
 								optype = (optypes & 0x0C)>>2;
-								if (optype == zm.OP_OMITTED)
+								if (optype == ZMachine.OP_OMITTED)
 									break;
 								operands[count++] = zm.get_operand(optype);
 								optype = (optypes & 0x03);
-								if (optype == zm.OP_OMITTED)
+								if (optype == ZMachine.OP_OMITTED)
 									break;
 								operands[count++] = zm.get_operand(optype);
 								optypes = optypes2;
@@ -218,7 +213,7 @@ public class ZInstruction {
 
 				case 0x80: /* short form */
 					optype = (opcode&0x30) >> 4;
-					if (optype == zm.OP_OMITTED) { /* 0OP */
+					if (optype == ZMachine.OP_OMITTED) { /* 0OP */
 								opnum = opcode;
 								count = 0;
 					}

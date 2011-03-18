@@ -3,6 +3,11 @@ package russotto.iff;
 public
 class IFFChunkNotFoundException extends Exception {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Constructs an IFFChunkNotFoundException with no detail message.
      * A detail message is a String that describes this particular exception.
      */

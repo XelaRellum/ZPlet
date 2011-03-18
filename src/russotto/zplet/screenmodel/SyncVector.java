@@ -8,6 +8,11 @@ package russotto.zplet.screenmodel;
 import java.util.*;
 
 class SyncVector extends Vector<Object> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public SyncVector() {
 		super();
 	}

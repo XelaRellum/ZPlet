@@ -8,6 +8,10 @@ package russotto.zplet.zmachine.state;
 import java.awt.*;
 
 class ZSFrame extends Frame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	FileDialog fd;
 	boolean ran=false;
 	int boxtype = FileDialog.SAVE;

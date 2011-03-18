@@ -6,6 +6,11 @@
 package russotto.zplet.screenmodel;
 
 class NoSuchKeyException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public NoSuchKeyException() {
 		super();
 	}

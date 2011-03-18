@@ -10,6 +10,10 @@ import java.awt.*;
 import russotto.zplet.ZColor;
 
 public class ZScreen extends Canvas {
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 		int lines;
 		int chars; /* in fixed font */
 		Font fixedfont;

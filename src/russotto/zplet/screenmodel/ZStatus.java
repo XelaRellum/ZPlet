@@ -8,7 +8,11 @@ package russotto.zplet.screenmodel;
 import java.awt.*;
 
 public class ZStatus extends Panel {
-		 boolean timegame;
+		 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+		boolean timegame;
 		 boolean initialized;
 		 boolean chronograph;
 		 String location;

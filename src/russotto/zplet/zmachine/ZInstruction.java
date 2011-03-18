@@ -950,7 +950,7 @@ public class ZInstruction {
 				zm.print_ascii_char((short)'*');
 				zm.print_ascii_char((short)'*');
 				zm.print_ascii_char((short)13);
-				zm.stop();
+				zm.request_stop();
 				return ZFALSE;
 	}
 

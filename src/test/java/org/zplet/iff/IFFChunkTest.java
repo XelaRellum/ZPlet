@@ -1,4 +1,4 @@
-package org.zplet.test.iff;
+package org.zplet.iff;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.zplet.iff.IFFChunk;
 
 
-public class IFFChunkTests {
+public class IFFChunkTest {
 
 	@SuppressWarnings("deprecation")
 	@Test

@@ -112,7 +112,7 @@ public class ZScreen extends Canvas {
 		}
 
 		public ZScreen( String font_family, int font_size ) {
-				Dimension mysize = size();
+				Dimension mysize = getSize();
 				
 				this.setFixedFont (font_family, font_size);
 				fixedmetrics = getFontMetrics(fixedfont);
@@ -433,12 +433,12 @@ public class ZScreen extends Canvas {
 				try {
 						texttop = top * fixedmetrics.getHeight();
 						g_store.copyArea(0, texttop + lines * fixedmetrics.getHeight(),
-														 size().width, (height - lines) * fixedmetrics.getHeight(),
+														 getSize().width, (height - lines) * fixedmetrics.getHeight(),
 														 0, -lines * fixedmetrics.getHeight());
 //						g_store.setColor(getBackground());
 						g_store.setColor(zbcolor);
 						g_store.fillRect(0, texttop + ((height-1) * fixedmetrics.getHeight()),
-														 size().width, fixedmetrics.getHeight());
+								getSize().width, fixedmetrics.getHeight());
 //						Toolkit.getDefaultToolkit().sync();
 				}
 				catch (NullPointerException booga) {
@@ -468,7 +468,7 @@ public class ZScreen extends Canvas {
 		}
 
 		public void clear() {
-				Dimension mysize = size();
+				Dimension mysize = getSize();
 
 				try {
 //						g_store.setColor(getBackground());

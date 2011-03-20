@@ -263,7 +263,7 @@ public class ZWindow {
 				 if (wrap) {
 						 last = linebuffer.length();
 						 while ((residual + charsWidth(linebuffer.toCharArray(), 0, last))
-								 > (myscreen.size().width)) {
+								 > (myscreen.getSize().width)) {
 								 space = linebuffer.lastIndexOf(' ', last);
 								 if (space == -1) {
 										 while ((residual + charsWidth(linebuffer.toCharArray(), 0, last)) > 
@@ -275,7 +275,7 @@ public class ZWindow {
 										 last = linebuffer.length();
 								 }
 								 else if ((residual + charsWidth(linebuffer.toCharArray(), 0, space)) <=
-												  (myscreen.size().width)) {
+												  (myscreen.getSize().width)) {
 										 printstring = linebuffer.substring(0, space);
 										 drawstring(printstring);
 										 while ((space < linebuffer.length())

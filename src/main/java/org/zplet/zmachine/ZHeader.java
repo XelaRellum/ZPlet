@@ -34,33 +34,33 @@ public abstract class ZHeader {
 	}
 
 	public int high_base() {
-		return (((int)memory_image[HIGH_BASE]<<8)&0xFF00) | 
-				(((int)memory_image[HIGH_BASE+1]) & 0x00FF);
+		return ((memory_image[HIGH_BASE]<<8)&0xFF00) | 
+				((memory_image[HIGH_BASE+1]) & 0x00FF);
 	}
 
 	public int initial_pc() {
-		return (((int)memory_image[INITIAL_PC]<<8)&0xFF00) |
-				(((int)memory_image[INITIAL_PC+1]) & 0x00FF);
+		return ((memory_image[INITIAL_PC]<<8)&0xFF00) |
+				((memory_image[INITIAL_PC+1]) & 0x00FF);
 	}
 
 	public int dictionary() {
-		return (((int)memory_image[DICTIONARY]<<8)&0xFF00) |
-				(((int)memory_image[DICTIONARY+1]) & 0x00FF);
+		return ((memory_image[DICTIONARY]<<8)&0xFF00) |
+				((memory_image[DICTIONARY+1]) & 0x00FF);
 	}
 	
 	public int object_table() {
-		return (((int)memory_image[OBJECT_TABLE]<<8)&0xFF00) |
-				(((int)memory_image[OBJECT_TABLE+1]) & 0x00FF);
+		return ((memory_image[OBJECT_TABLE]<<8)&0xFF00) |
+				((memory_image[OBJECT_TABLE+1]) & 0x00FF);
 	}	
 	
 	public int global_table() {
-		return (((int)memory_image[GLOBAL_TABLE]<<8)&0xFF00) |
-				(((int)memory_image[GLOBAL_TABLE+1]) & 0x00FF);
+		return ((memory_image[GLOBAL_TABLE]<<8)&0xFF00) |
+				((memory_image[GLOBAL_TABLE+1]) & 0x00FF);
 	}
 	
 	public int static_base() {
-		return (((int)memory_image[STATIC_BASE]<<8)&0xFF00) |
-				(((int)memory_image[STATIC_BASE+1]) & 0x00FF);
+		return ((memory_image[STATIC_BASE]<<8)&0xFF00) |
+				((memory_image[STATIC_BASE+1]) & 0x00FF);
 	}
 	
 	public boolean transcripting() {
@@ -75,8 +75,8 @@ public abstract class ZHeader {
 	}
 
 	public int abbrev_table() {
-		return (((int)memory_image[ABBREV_TABLE]<<8) & 0xFF00) |
-				(((int)memory_image[ABBREV_TABLE+1]) & 0x00FF);
+		return ((memory_image[ABBREV_TABLE]<<8) & 0xFF00) |
+				((memory_image[ABBREV_TABLE+1]) & 0x00FF);
 	}
 	
 	public boolean force_fixed() {

@@ -441,7 +441,7 @@ immutable.	But the arrays aren't, so don't mess with them */
 				}
 				else { /* get it from the running Z-machine state */
 					if (version > 3) {
-						argcount = (short)(((ZMachine5)zm).argcount);
+						argcount = (((ZMachine5)zm).argcount);
 					}
 					else {
 						argcount = 4; /* doesn't really matter for V3 */

@@ -40,6 +40,7 @@ public class ZDictionary5 extends ZDictionary{
 				this(zm, zm.header.dictionary());
 		}
 
+		@Override
 		public boolean parse_word(int textloc, int wordloc, int wordlength, int parseloc) {
 				return parse_word(textloc, wordloc, wordlength, parseloc, true);
 		}
@@ -113,6 +114,7 @@ public class ZDictionary5 extends ZDictionary{
 				return false;
 		}
 
+		@Override
 		public void tokenise(int textloc, int textlength, int parseloc) {
 			tokenise(textloc, textlength, parseloc, true);
 		}

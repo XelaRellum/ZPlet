@@ -34,17 +34,21 @@ public class ZMachine5 extends ZMachine {
 				argcount = 0;
 		}
 
+		@Override
 		public void update_status_line() {
 		}
 
+		@Override
 		public int string_address(short addr) {
-				return (((int)addr)&0xFFFF) << 2;
+				return ((addr)&0xFFFF) << 2;
 		}
 
+		@Override
 		public int routine_address(short addr) {
-				return (((int)addr)&0xFFFF) << 2;
+				return ((addr)&0xFFFF) << 2;
 		}
 
+		@Override
 		public void restart() {
 
 				super.restart();
@@ -56,6 +60,7 @@ public class ZMachine5 extends ZMachine {
 				window[0].movecursor(0,window[0].getHeight()-1);
 		}
 
+		@Override
 		public void set_header_flags() { /* at start, restart, restore */
 				ZHeader5 header = (ZHeader5)this.header;
 				
@@ -75,7 +80,7 @@ public class ZMachine5 extends ZMachine {
 				header.set_mouse_available(false);
 				header.set_sound_available(false);
 				header.set_interpreter_number(ZHeader5.INTERP_MSDOS);
-				header.set_interpreter_version((int)'J');
+				header.set_interpreter_version('J');
 				header.set_screen_height_lines(screen.getlines());
 				header.set_screen_width_characters(screen.getchars());
 

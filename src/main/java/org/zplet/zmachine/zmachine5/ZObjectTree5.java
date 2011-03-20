@@ -14,21 +14,25 @@ public class ZObjectTree5 extends ZObjectTree
 				super(zm);
 		}
 
+		@Override
 		protected int ptableoffset()
 		{
 				return 12;
 		}
 
+		@Override
 		protected int getentryloc(short object)
 		{
 				return object_tree + (((object&0xFFFF) - 1) * 14);
 		}
 		
+		@Override
 		protected int num_properties()
 		{
 				return 63;
 		}
 
+		@Override
 		public short parent(short object) {
 				int entryloc;
 				
@@ -37,6 +41,7 @@ public class ZObjectTree5 extends ZObjectTree
 										   (zm.memory_image[entryloc+7]&0xFF));
 		}
 
+		@Override
 		public short sibling(short object) {
 				int entryloc;
 				
@@ -45,6 +50,7 @@ public class ZObjectTree5 extends ZObjectTree
 										   (zm.memory_image[entryloc+9]&0xFF));
 		}
 
+		@Override
 		public short child(short object) {
 				int entryloc;
 				
@@ -53,6 +59,7 @@ public class ZObjectTree5 extends ZObjectTree
 										   (zm.memory_image[entryloc+11]&0xFF));
 		}
 
+		@Override
 		public void set_parent(short object, short newparent) {
 				int entryloc;
 				
@@ -62,6 +69,7 @@ public class ZObjectTree5 extends ZObjectTree
 				zm.memory_image[entryloc + 7] = (byte)(newparent&0xFF);
 		}
 
+		@Override
 		public void set_sibling(short object, short newparent) {
 				int entryloc;
 				
@@ -71,6 +79,7 @@ public class ZObjectTree5 extends ZObjectTree
 				zm.memory_image[entryloc + 9] = (byte)(newparent&0xFF);
 		}
 
+		@Override
 		public void set_child(short object, short newparent) {
 				int entryloc;
 				
@@ -80,6 +89,7 @@ public class ZObjectTree5 extends ZObjectTree
 				zm.memory_image[entryloc + 11] = (byte)(newparent&0xFF);
 		}
 
+		@Override
 		public int prop_entry_address(short object, short propnum) {
 				int entry_address;
 				int sizebyte;
@@ -110,6 +120,7 @@ public class ZObjectTree5 extends ZObjectTree
 				return 0;
 		}
 
+		@Override
 		public short next_prop(short object, short propnum) {
 				int entry_address;
 				int sizebyte;
@@ -141,6 +152,7 @@ public class ZObjectTree5 extends ZObjectTree
 				return (short)(sizebyte & 0x3F);
 		}
 
+		@Override
 		public short prop_address(short object, short propnum) {
 				int entry_address = prop_entry_address(object, propnum);
 				if (entry_address == 0)
@@ -151,6 +163,7 @@ public class ZObjectTree5 extends ZObjectTree
 						return (short)(entry_address + 1);
 		}
 
+		@Override
 		public short prop_len(short prop_address) {
 				int sizebyte;
 

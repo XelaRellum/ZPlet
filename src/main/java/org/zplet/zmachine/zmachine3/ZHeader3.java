@@ -51,6 +51,7 @@ class ZHeader3 extends ZHeader
 		}
 	}
 
+	@Override
 	public int file_length() {
 		int packed_length;
 		

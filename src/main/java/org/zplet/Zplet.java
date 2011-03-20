@@ -27,6 +27,7 @@ public class Zplet extends java.applet.Applet {
 
 		boolean failed = false;
 		
+		@Override
 		public void init() {
 			String statusfg, statusbg, mainfg, mainbg;
 			String font_family, font_size;
@@ -166,6 +167,7 @@ public class Zplet extends java.applet.Applet {
 			return false;
 		}
 */
+		@Override
 		public void start() {
 			if (!failed && ((zm==null) || !zm.isAlive())) {
 				startzm();
@@ -173,6 +175,7 @@ public class Zplet extends java.applet.Applet {
 				
 		}
 
+		@Override
 		public void destroy() {
 		    if (zm != null)
 				zm.request_stop();

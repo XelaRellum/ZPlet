@@ -74,12 +74,14 @@ public class ZInstruction5 extends ZInstruction
 				operands = new short[8];
 		}
 
+		@Override
 		public void decode_instruction()
 		{
 				has_returned = false;
 				super.decode_instruction();
 		}
 
+		@Override
 		public void execute()
 		{
 				short result;
@@ -412,10 +414,12 @@ public class ZInstruction5 extends ZInstruction
 				}
 		}
 
+		@Override
 		protected boolean isbranch() {
 				return branch5[opnum];
 		}
 
+		@Override
 		protected boolean isstore() {
 				if (has_returned)
 						return store5[call_opnum];
@@ -482,6 +486,7 @@ public class ZInstruction5 extends ZInstruction
 				return ZFALSE;
 		}
 
+		@Override
 		protected void z_ret()	/* overrides Standard z_ret */
 		{
 				Object tos;
@@ -539,6 +544,7 @@ public class ZInstruction5 extends ZInstruction
 				return ZNOTDONE;
 		}
 
+		@Override
 		protected short op_call_1s()
 		{
 				z_call();
@@ -843,6 +849,7 @@ public class ZInstruction5 extends ZInstruction
 //				return ZNOTDONE;
 //		}
 
+		@Override
 		protected short op_restore()
 		{
 					ZState restore_state;
@@ -899,6 +906,7 @@ public class ZInstruction5 extends ZInstruction
 				return result;
 		}
 
+		@Override
 		protected void setupbs() {
 		/* Sets up store and branch instructions */
 				branch5[OP_JE] = true;

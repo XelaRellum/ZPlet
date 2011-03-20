@@ -72,7 +72,8 @@ public class IFFInputFile
     	seek(chunkend);
     }
 
-    public synchronized void close() throws IOException
+    @Override
+	public synchronized void close() throws IOException
     {
 		while (!openchunks.empty()) {
 			try {

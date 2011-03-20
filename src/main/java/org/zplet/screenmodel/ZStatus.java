@@ -82,11 +82,13 @@ public class ZStatus extends Panel {
 				 repaint();
 		 }
 		
-		 public Dimension minimumSize() {
+		 @Override
+		public Dimension minimumSize() {
 				 return new Dimension(100,10);
 		 }
 		
-		 public Dimension preferredSize() {
+		 @Override
+		public Dimension preferredSize() {
 				 return new Dimension(500,20);
 		 }
  }

@@ -179,6 +179,7 @@ class ZHeader5 extends ZHeader
 				memory_image[DEFAULT_FOREGROUND_COLOR] = (byte)color;
 		}
 
+		@Override
 		public int file_length() {
 				int packed_length;
 				

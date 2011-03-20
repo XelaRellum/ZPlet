@@ -40,6 +40,7 @@ public class ZDictionary3 extends ZDictionary{
 		this(zm, zm.header.dictionary());
 	}
 
+	@Override
 	public boolean parse_word(int textloc, int wordloc, int wordlength, int parseloc) {
 		short encword[];
 		int encint;
@@ -99,6 +100,7 @@ public class ZDictionary3 extends ZDictionary{
 		return false;
 	}
 
+	@Override
 	public void tokenise(int textloc, int textlength, int parseloc) {
 		int wordloc, wordlength;
 		int textleft = textlength;

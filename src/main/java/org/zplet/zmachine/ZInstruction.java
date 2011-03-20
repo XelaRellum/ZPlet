@@ -248,9 +248,9 @@ public class ZInstruction {
 					else if ((branchoffset & 0x20) != 0) /* negative 14-bit number */
 								branchoffset = (short)(0xC000 |
 														((branchoffset << 8) |
-														(((short)zm.get_code_byte()) & 0xFF)));
+														((zm.get_code_byte()) & 0xFF)));
 					else /* positive 14-bit number */
-								branchoffset = (short)(((branchoffset&0x3F) << 8) | (((short)zm.get_code_byte())&0xFF));
+								branchoffset = (short)(((branchoffset&0x3F) << 8) | ((zm.get_code_byte())&0xFF));
 				}
 	}
 
@@ -744,7 +744,7 @@ public class ZInstruction {
 
 	protected short op_print_addr()
 	{
-				zm.print_string((int)operands[0] & 0xFFFF);
+				zm.print_string(operands[0] & 0xFFFF);
 				return ZFALSE;
 	}
 
@@ -1107,7 +1107,7 @@ public class ZInstruction {
 				char [] mychars;
 				int i;
 
-				mychars = Integer.toString((int)operands[0], 10).toCharArray();
+				mychars = Integer.toString(operands[0], 10).toCharArray();
 				for (i = 0; i < mychars.length; i++) {
 					zm.print_ascii_char((short)mychars[i]);
 				}

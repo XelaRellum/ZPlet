@@ -28,6 +28,7 @@ public class ZMachine3 extends ZMachine {
 		zi = new ZInstruction(this);
 	}
 
+	@Override
 	public void update_status_line() {
 		ZHeader3 header = (ZHeader3)this.header;
 		
@@ -46,14 +47,17 @@ public class ZMachine3 extends ZMachine {
 		status_location = null;
 	}
 
+	@Override
 	public int string_address(short addr) {
-		return (((int)addr)&0xFFFF) << 1;
+		return ((addr)&0xFFFF) << 1;
 	}
 
+	@Override
 	public int routine_address(short addr) {
-		return (((int)addr)&0xFFFF) << 1;
+		return ((addr)&0xFFFF) << 1;
 	}
 
+	@Override
 	public void restart() {
 
 		super.restart();
@@ -65,6 +69,7 @@ public class ZMachine3 extends ZMachine {
 		window[0].movecursor(0,window[0].getHeight()-1);
 	}
 
+	@Override
 	public void set_header_flags() { /* at start, restart, restore */
 		ZHeader3 header = (ZHeader3)this.header;
 

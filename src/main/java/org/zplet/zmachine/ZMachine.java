@@ -106,7 +106,7 @@ public abstract class ZMachine extends Thread {
 				}
 				else if (outputs[3]) {
 					nchars = ((memory_image[printmemory] << 8)&0xFF00) |
-									  (((int)(memory_image[printmemory+1]))&0xFF);
+									  (((memory_image[printmemory+1]))&0xFF);
 					if (ch > 255)
 								memory_image[printmemory + nchars + 2] = (byte)'?';
 					else if (ch == 10)
@@ -150,16 +150,16 @@ public abstract class ZMachine extends Thread {
 
 				zi = 0;
 				for (i = 0; i < wordlen; i++) {
-					ch = (int)memory_image[wordloc + i];
-					if ((ch >= (int)'a') && (ch <= (int)'z')) {
-								zchars[zi] = ch - (int)'a' + 6;
+					ch = memory_image[wordloc + i];
+					if ((ch >= 'a') && (ch <= 'z')) {
+								zchars[zi] = ch - 'a' + 6;
 								if ((++zi) == (nwords*3))
 									break;
 					}
-					else if ((ch >= (int)'A') && (ch <= (int)'Z')) {
+					else if ((ch >= 'A') && (ch <= 'Z')) {
 								/* encode upper as lower.  Legal? */
 								System.err.println("Tried to encode uppercase dictionary word");
-								zchars[zi] = ch - (int)'A' + 6;
+								zchars[zi] = ch - 'A' + 6;
 								if ((++zi) == (nwords*3))
 									break;
 					}
@@ -224,7 +224,7 @@ public abstract class ZMachine extends Thread {
 				abbrev_mode = -1;
 				abbrev_index = header.abbrev_table() + 2 * abbr_num;
 				string_addr = (((memory_image[abbrev_index]<<8)&0xFF00) |
-					(((int)memory_image[abbrev_index + 1]) & 0xFF)) * 2;
+					((memory_image[abbrev_index + 1]) & 0xFF)) * 2;
 				print_string(string_addr);
 	}
 
@@ -296,7 +296,7 @@ public abstract class ZMachine extends Thread {
 				zchars = new byte[3];
 				do {
 					zseq = ((memory_image[addr++] << 8) & 0xFF00) |
-								(((int)memory_image[addr++])&0xFF);
+								((memory_image[addr++])&0xFF);
 					zchars[0] = (byte)((zseq>>10) & 0x1F);
 					zchars[1] = (byte)((zseq>>5) & 0x1F);
 					zchars[2] = (byte)(zseq&0x001F);
@@ -308,6 +308,7 @@ public abstract class ZMachine extends Thread {
 				return nbytes;
 	}
 
+	@Override
 	public void start() {
 				terminate = false;
 				screen.clear();
@@ -320,6 +321,7 @@ public abstract class ZMachine extends Thread {
 				terminate = true;
 	}
 
+	@Override
 	public void run()
 	{
 				try {

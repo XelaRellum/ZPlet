@@ -47,7 +47,7 @@ public class IFFOutputFile
 		
 		currentlocation = getFilePointer();
 		chunklength = getChunkPointer();
-		location = ((Long)openchunks.pop()).longValue();
+		location = (openchunks.pop()).longValue();
 		seek(location);
 		writeInt(chunklength);
 		seek(currentlocation);
@@ -56,7 +56,8 @@ public class IFFOutputFile
 		}
     }
     
-    public synchronized void close() throws IOException
+    @Override
+	public synchronized void close() throws IOException
     {
 		while (!openchunks.empty())
 		    closeChunk();

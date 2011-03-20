@@ -15,6 +15,7 @@ class ZStateHeader extends ZHeader
 	}
 
 	/* yes, a kludge */
+	@Override
 	public int file_length() {
 		return 0;
 	}

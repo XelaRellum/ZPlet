@@ -33,6 +33,7 @@ class ZSFrame extends Frame {
 		this.boxtype = boxtype;
 	}
 
+	@Override
 	public void processEvent(AWTEvent evt)
 	{
 		if (!ran) {

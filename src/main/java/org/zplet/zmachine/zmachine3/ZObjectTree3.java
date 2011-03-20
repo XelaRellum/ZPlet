@@ -14,21 +14,25 @@ class ZObjectTree3 extends ZObjectTree
 		super(zm);
 	}
 
+	@Override
 	protected int ptableoffset()
 	{
 		return 7;
 	}
 
+	@Override
 	protected int getentryloc(short object)
 	{
 		return object_tree + (((object&0xFFFF) - 1) * 9);
 	}
 	
+	@Override
 	protected int num_properties()
 	{
 		return 31;
 	}
 
+	@Override
 	public short parent(short object) {
 		int entryloc;
 		
@@ -36,6 +40,7 @@ class ZObjectTree3 extends ZObjectTree
 		return (short)(zm.memory_image[entryloc + 4] & 0xFF);
 	}
 
+	@Override
 	public short sibling(short object) {
 		int entryloc;
 		
@@ -43,6 +48,7 @@ class ZObjectTree3 extends ZObjectTree
 		return (short)(zm.memory_image[entryloc + 5] & 0xFF);
 	}
 
+	@Override
 	public short child(short object) {
 		int entryloc;
 		
@@ -50,6 +56,7 @@ class ZObjectTree3 extends ZObjectTree
 		return (short)(zm.memory_image[entryloc + 6] & 0xFF);
 	}
 
+	@Override
 	public void set_parent(short object, short newparent) {
 		int entryloc;
 		
@@ -57,6 +64,7 @@ class ZObjectTree3 extends ZObjectTree
 		zm.memory_image[entryloc + 4] = (byte)newparent;
 	}
 
+	@Override
 	public void set_sibling(short object, short newparent) {
 		int entryloc;
 		
@@ -64,6 +72,7 @@ class ZObjectTree3 extends ZObjectTree
 		zm.memory_image[entryloc + 5] = (byte)newparent;
 	}
 
+	@Override
 	public void set_child(short object, short newparent) {
 		int entryloc;
 		
@@ -71,6 +80,7 @@ class ZObjectTree3 extends ZObjectTree
 		zm.memory_image[entryloc + 6] = (byte)newparent;
 	}
 
+	@Override
 	public int prop_entry_address(short object, short propnum) {
 		int entry_address;
 		int sizebyte;
@@ -94,6 +104,7 @@ class ZObjectTree3 extends ZObjectTree
 		return 0;
 	}
 
+	@Override
 	public short next_prop(short object, short propnum) {
 		int entry_address;
 		int sizebyte;
@@ -117,6 +128,7 @@ class ZObjectTree3 extends ZObjectTree
 		return (short)(sizebyte & 31);
 	}
 
+	@Override
 	public short prop_address(short object, short propnum) {
 		int entry_address = prop_entry_address(object, propnum);
 
@@ -125,6 +137,7 @@ class ZObjectTree3 extends ZObjectTree
 		return (short)(entry_address + 1);
 	}
 
+	@Override
 	public short prop_len(short prop_address) {
 		int sizebyte;
 

@@ -144,6 +144,7 @@ public class ZScreen extends Canvas {
 		}
 */
 
+		@Override
 		public boolean mouseEnter(Event evt, int x, int y)
 		{
 				requestFocus();
@@ -190,11 +191,11 @@ public class ZScreen extends Canvas {
 					return 13;
 				if (unicode == '\b')
 					return 127;
-				else if (((int)unicode < 0x20) &&
+				else if ((unicode < 0x20) &&
 					 (unicode != '\r' /*'\uu000d'*/) &&
 					 (unicode != '\uu001b'))
 					throw new NoSuchKeyException("Illegal character input: " + (short)unicode);
-				else if ((int)unicode < 0x80) /* normal ascii, including DELETE */
+				else if (unicode < 0x80) /* normal ascii, including DELETE */
 					return (short)unicode;
 				else {
 					for (i = 0; i < accent_table.length; i++) {
@@ -228,6 +229,7 @@ public class ZScreen extends Canvas {
 				}
 		}
 		
+		@Override
 		public boolean keyDown(Event e, int key) {
 
 				short code;
@@ -285,7 +287,7 @@ public class ZScreen extends Canvas {
 						inputcursor.hide();
 						if ((incode == 8) || (incode == 127)) {
 								try {
-										thecode = (Integer)bufferedcodes.lastElement();
+										thecode = bufferedcodes.lastElement();
 										bufferedcodes.removeElementAt(bufferedcodes.size() - 1);
 										inputwindow.flush();
 										inputwindow.movecursor(inputwindow.cursorx - 1, 
@@ -312,7 +314,7 @@ public class ZScreen extends Canvas {
 								bufferedcodes.addElement(new Integer(incode));
 						}
 				}
-				thecode = (Integer)bufferedcodes.firstElement();
+				thecode = bufferedcodes.firstElement();
 				bufferedcodes.removeElementAt(0);
 				if (bufferedcodes.isEmpty()) {
 						bufferdone = false;
@@ -328,6 +330,7 @@ public class ZScreen extends Canvas {
 				return chars;
 		}
 
+		@Override
 		public synchronized void reshape(int x, int y, int width, int height) {
 				int lines;
 				if ((width >= 0) && (height >= 0)) {
@@ -448,6 +451,7 @@ public class ZScreen extends Canvas {
 				hasscrolled = true;
 		}
 		
+		@Override
 		public synchronized void paint(Graphics g) {
 //				super.paint(g);
 //				System.err.println("paint");
@@ -461,6 +465,7 @@ public class ZScreen extends Canvas {
 //				super.repaint(tm,x,y,width,height);
 //		}
 
+		@Override
 		public void update(Graphics g) {
 //				System.err.println("update");
 				g.setColor(getForeground());
@@ -515,10 +520,12 @@ public class ZScreen extends Canvas {
 			return (Frame)cursor;
 		}
 		
+		@Override
 		public Dimension minimumSize() {
 				return new Dimension(100,100);
 		}
 
+		@Override
 		public Dimension preferredSize() {
 				return new Dimension(500,500);
 		}

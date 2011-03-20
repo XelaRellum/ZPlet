@@ -11,12 +11,14 @@ public class ZMachine8 extends ZMachine5 {
 				super(screen, memory_image);
 		}
 
+		@Override
 		public int string_address(short addr) {
-				return (((int)addr)&0xFFFF) << 3;
+				return ((addr)&0xFFFF) << 3;
 		}
 
+		@Override
 		public int routine_address(short addr) {
-				return (((int)addr)&0xFFFF) << 3;
+				return ((addr)&0xFFFF) << 3;
 		}
 }
 

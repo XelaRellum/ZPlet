@@ -7,7 +7,7 @@ package org.zplet.zmachine;
 
 import java.util.*;
 
-import org.zplet.screenmodel.*;
+import org.zplet.awt.screenmodel.*;
 import org.zplet.zmachine.state.ZState;
 
 public abstract class ZMachine extends Thread {

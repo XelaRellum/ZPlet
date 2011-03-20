@@ -9,7 +9,7 @@ import java.awt.*;
 import java.net.*;
 import java.io.*;
 
-import org.zplet.screenmodel.*;
+import org.zplet.awt.screenmodel.*;
 import org.zplet.zmachine.*;
 import org.zplet.zmachine.zmachine3.ZMachine3;
 import org.zplet.zmachine.zmachine5.ZMachine5;

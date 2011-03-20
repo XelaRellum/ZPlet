@@ -3,7 +3,7 @@
 /* As of 23 February 2001, this code is open source and covered by the */
 /* Artistic License, found within this package */
 
-package org.zplet.screenmodel;
+package org.zplet.awt.screenmodel;
 
 import java.awt.*;
 

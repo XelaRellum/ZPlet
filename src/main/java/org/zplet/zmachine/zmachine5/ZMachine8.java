@@ -5,7 +5,7 @@
 
 package org.zplet.zmachine.zmachine5;
 
-import org.zplet.screenmodel.ZScreen;
+import org.zplet.awt.screenmodel.ZScreen;
 
 public class ZMachine8 extends ZMachine5 {
 	public ZMachine8(ZScreen screen, byte[] memory_image) {

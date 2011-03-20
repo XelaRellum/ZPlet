@@ -5,8 +5,8 @@
 
 package org.zplet.zmachine.zmachine5;
 
-import org.zplet.screenmodel.ZScreen;
-import org.zplet.screenmodel.ZWindow;
+import org.zplet.awt.screenmodel.ZScreen;
+import org.zplet.awt.screenmodel.ZWindow;
 import org.zplet.zmachine.*;
 import org.zplet.zmachine.state.ZState;
 

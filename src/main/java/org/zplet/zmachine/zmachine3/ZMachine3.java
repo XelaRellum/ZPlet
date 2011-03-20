@@ -5,9 +5,9 @@
 
 package org.zplet.zmachine.zmachine3;
 
-import org.zplet.screenmodel.ZScreen;
-import org.zplet.screenmodel.ZStatus;
-import org.zplet.screenmodel.ZWindow;
+import org.zplet.awt.screenmodel.ZScreen;
+import org.zplet.awt.screenmodel.ZStatus;
+import org.zplet.awt.screenmodel.ZWindow;
 import org.zplet.zmachine.*;
 
 public class ZMachine3 extends ZMachine {

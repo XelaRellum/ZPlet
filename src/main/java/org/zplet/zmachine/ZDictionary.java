@@ -5,10 +5,10 @@
 
 package org.zplet.zmachine;
 
-public abstract class ZDictionary
-{
+public abstract class ZDictionary {
 	public abstract void tokenise(int textloc, int textlength, int parseloc);
-	public abstract boolean parse_word(int textloc, int wordloc, int wordlength, int parseloc);
+
+	public abstract boolean parse_word(int textloc, int wordloc,
+			int wordlength, int parseloc);
 
 }
-

@@ -13,29 +13,25 @@ class ZSFrame extends Frame {
 	 */
 	private static final long serialVersionUID = 1L;
 	FileDialog fd;
-	boolean ran=false;
+	boolean ran = false;
 	int boxtype = FileDialog.SAVE;
 	Thread blockedthread = null;
 
-	public ZSFrame()
-	{
+	public ZSFrame() {
 		super();
 	}
 
-	public ZSFrame(String title)
-	{
+	public ZSFrame(String title) {
 		super(title);
 	}
 
-	public ZSFrame(String title, int boxtype)
-	{
+	public ZSFrame(String title, int boxtype) {
 		this(title);
 		this.boxtype = boxtype;
 	}
 
 	@Override
-	public void processEvent(AWTEvent evt)
-	{
+	public void processEvent(AWTEvent evt) {
 		if (!ran) {
 			fd = new FileDialog(this, "Save game as...", boxtype);
 			fd.setVisible(true);

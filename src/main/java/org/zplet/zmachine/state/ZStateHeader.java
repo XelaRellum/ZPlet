@@ -7,10 +7,8 @@ package org.zplet.zmachine.state;
 
 import org.zplet.zmachine.ZHeader;
 
-class ZStateHeader extends ZHeader
-{
-	ZStateHeader (byte [] memory_image)
-	{
+class ZStateHeader extends ZHeader {
+	ZStateHeader(byte[] memory_image) {
 		this.memory_image = memory_image;
 	}
 
@@ -20,4 +18,3 @@ class ZStateHeader extends ZHeader
 		return 0;
 	}
 }
-

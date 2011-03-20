@@ -5,14 +5,13 @@
 
 package org.zplet.zmachine;
 
-
-public class ZFrameBound
-{
+public class ZFrameBound {
 	private boolean store;
-	
+
 	public ZFrameBound(boolean store) {
 		this.store = store;
 	}
+
 	public boolean isstore() {
 		return store;
 	}

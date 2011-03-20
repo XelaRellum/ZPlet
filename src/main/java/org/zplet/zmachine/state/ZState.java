@@ -17,7 +17,6 @@ import org.zplet.zmachine.ZMachine;
 import org.zplet.zmachine.zmachine5.ZInstruction5;
 import org.zplet.zmachine.zmachine5.ZMachine5;
 
-
 public class ZState {
 	final static short QUETZAL_PROCEDURE = 0x10;
 
@@ -28,7 +27,7 @@ public class ZState {
 	byte dynamic[];
 	short locals[];
 	short argcount;
-	
+
 	public ZState(ZMachine zm) {
 		this.zm = zm;
 	}
@@ -38,9 +37,11 @@ public class ZState {
 
 		header = new ZStateHeader(zm.memory_image);
 		dyn_size = header.static_base();
-/* clones the stack but not the Integers within.  Fortunately they are
-immutable.	But the arrays aren't, so don't mess with them */
-		zstack = (Stack<Object>)zm.zstack.clone();
+		/*
+		 * clones the stack but not the Integers within. Fortunately they are
+		 * immutable. But the arrays aren't, so don't mess with them
+		 */
+		zstack = (Stack<Object>) zm.zstack.clone();
 		dynamic = new byte[dyn_size];
 		System.arraycopy(zm.memory_image, 0, dynamic, 0, dyn_size);
 		locals = new short[zm.locals.length];
@@ -48,21 +49,20 @@ immutable.	But the arrays aren't, so don't mess with them */
 		header = new ZStateHeader(dynamic);
 		pc = zm.pc;
 		if (header.version() > 3)
-			argcount = ((ZMachine5)zm).argcount;
+			argcount = ((ZMachine5) zm).argcount;
 	}
 
 	public void restore_saved() {
 		System.arraycopy(dynamic, 0, zm.memory_image, 0, dynamic.length);
 		zm.locals = new short[locals.length];
 		System.arraycopy(locals, 0, zm.locals, 0, locals.length);
-		zm.zstack = (Stack<Object>)zstack.clone();
+		zm.zstack = (Stack<Object>) zstack.clone();
 		zm.pc = pc;
 		if (header.version() > 3)
-			((ZMachine5)zm).argcount = argcount;
+			((ZMachine5) zm).argcount = argcount;
 	}
 
-	String get_save_file_name(Frame parentframe)
-	{
+	String get_save_file_name(Frame parentframe) {
 		FileDialog fd;
 		String returnval;
 
@@ -71,25 +71,23 @@ immutable.	But the arrays aren't, so don't mess with them */
 			fd.setVisible(true);
 			Toolkit.getDefaultToolkit().sync();
 			returnval = fd.getDirectory() + fd.getFile();
-		}
-		catch (AWTError awte) {
+		} catch (AWTError awte) {
 			returnval = "";
 		}
 		return returnval;
 	}
-	
-	public String get_restore_file_name(Frame parentframe)
-	{
+
+	public String get_restore_file_name(Frame parentframe) {
 		FileDialog fd;
 		String returnval;
 
 		try {
-			fd = new FileDialog(parentframe, "Restore game from...", FileDialog.LOAD);
+			fd = new FileDialog(parentframe, "Restore game from...",
+					FileDialog.LOAD);
 			fd.setVisible(true);
 			Toolkit.getDefaultToolkit().sync();
 			returnval = fd.getDirectory() + fd.getFile();
-		}
-		catch (AWTError awte) {
+		} catch (AWTError awte) {
 			returnval = "";
 		}
 		return returnval;
@@ -103,25 +101,25 @@ immutable.	But the arrays aren't, so don't mess with them */
 		boolean returnvalue = false;
 		short release;
 		short checksum;
-		byte [] serial = new byte[6];
+		byte[] serial = new byte[6];
 		int version;
 		int framepc;
 		byte flags;
 		byte resultvar;
 		byte argmask;
 		int evalwords;
-		short [] framelocals;
+		short[] framelocals;
 		int numlocals;
-		short [] lastlocals;
+		short[] lastlocals;
 		byte lastargmask;
 		short argcount;
 		int i;
 		int frameno;
 		long ifhdend;
-		
+
 		lastlocals = new short[0];
 		lastargmask = 0;
-		
+
 		version = zm.header.version();
 		fname = get_restore_file_name(parentframe);
 		try {
@@ -133,9 +131,9 @@ immutable.	But the arrays aren't, so don't mess with them */
 				release = infile.readShort();
 				infile.read(serial, 0, 6);
 				checksum = infile.readShort();
-				
+
 				/* verify the story file type */
-				
+
 				if (release != zm.header.release())
 					throw new IOException("Release # did not match");
 				if (checksum != zm.header.checksum())
@@ -144,121 +142,137 @@ immutable.	But the arrays aren't, so don't mess with them */
 					if (zm.memory_image[ZHeader.SERIAL_NUMBER + i] != serial[i])
 						throw new IOException("Serial # did not match");
 				}
-				
+
 				/* Set the program counter */
-				
-				pc = (infile.readByte()&0xFF) << 16;
+
+				pc = (infile.readByte() & 0xFF) << 16;
 				pc = pc | (infile.readShort() & 0xFFFF);
-				
+
 				infile.closeChunk();
-				
+
 				ifhdend = infile.getFilePointer();
 				/* read the memory chunk */
-				
+
 				try {
 					chunkinfo = infile.skipToChunk("UMem");
 					if (chunkinfo.chunklength != zm.header.static_base())
-						throw new IOException("Dynamic memory area is " + chunkinfo.chunklength + " expected " + zm.header.static_base());
+						throw new IOException("Dynamic memory area is "
+								+ chunkinfo.chunklength + " expected "
+								+ zm.header.static_base());
 					dynamic = new byte[chunkinfo.chunklength];
 					infile.read(dynamic, 0, chunkinfo.chunklength);
-				}
-				catch(IFFChunkNotFoundException memnotfound) {
+				} catch (IFFChunkNotFoundException memnotfound) {
 					boolean runmode;
 					byte ch;
 					int nbytesout;
 					int length;
-					
+
 					infile.seek(ifhdend);
 					chunkinfo = infile.skipToChunk("CMem");
 					dynamic = new byte[zm.header.static_base()];
-					System.arraycopy(zm.restart_state.dynamic, 0, dynamic, 0, zm.header.static_base());
-					
+					System.arraycopy(zm.restart_state.dynamic, 0, dynamic, 0,
+							zm.header.static_base());
+
 					length = chunkinfo.chunklength;
 					nbytesout = 0;
 					runmode = false;
 					while (length-- > 0) {
 						if (nbytesout >= zm.header.static_base())
-							throw new IOException("CMem exceeded dynamic memory size");
+							throw new IOException(
+									"CMem exceeded dynamic memory size");
 						ch = infile.readByte();
 						if (runmode) {
 							runmode = false;
-							nbytesout += (ch&0xFF) + 1;
-						}
-						else if (ch != 0) {
+							nbytesout += (ch & 0xFF) + 1;
+						} else if (ch != 0) {
 							dynamic[nbytesout++] ^= ch;
-						}
-						else
+						} else
 							runmode = true;
 					}
-				}		
+				}
 				header = new ZStateHeader(dynamic);
 
 				infile.closeChunk();
-				
+
 				infile.seek(ifhdend);
 				/* read the stacks */
 				chunkinfo = infile.skipToChunk("Stks");
 				zstack = new Stack<Object>();
-				
+
 				frameno = 0;
 				while (infile.getChunkPointer() < chunkinfo.chunklength) {
 					/* read the frame header */
-					framepc = (infile.readByte()&0xFF) << 16;
+					framepc = (infile.readByte() & 0xFF) << 16;
 					framepc = framepc | (infile.readShort() & 0xFFFF);
 					flags = infile.readByte();
 					resultvar = infile.readByte();
 					argmask = infile.readByte();
 					evalwords = infile.readShort();
-					numlocals = flags&0xF;
+					numlocals = flags & 0xF;
 					framelocals = new short[numlocals];
 					for (i = 0; i < numlocals; i++)
 						framelocals[i] = infile.readShort();
 					/* build the internal frame header */
-					
+
 					if (frameno > 0) { /* no frame header for dummy frame */
 						if ((flags & QUETZAL_PROCEDURE) == QUETZAL_PROCEDURE) {
 							zstack.push(new ZFrameBound(false));
 							if (version > 3)
-								zstack.push(new Integer(ZInstruction5.OP_CALL_VN));  /* not entirely correct, but close enough */
-						}
-						else {
+								zstack.push(new Integer(
+										ZInstruction5.OP_CALL_VN)); /*
+																	 * not
+																	 * entirely
+																	 * correct,
+																	 * but close
+																	 * enough
+																	 */
+						} else {
 							zstack.push(new ZFrameBound(true));
 							zstack.push(new Integer(resultvar));
 							if (version > 3)
-								zstack.push(new Integer(ZInstruction.OP_CALL_1S));  /* not entirely correct, but close enough */
+								zstack.push(new Integer(ZInstruction.OP_CALL_1S)); /*
+																					 * not
+																					 * entirely
+																					 * correct
+																					 * ,
+																					 * but
+																					 * close
+																					 * enough
+																					 */
 						}
 						if ((lastargmask & (lastargmask + 1)) != 0)
-							throw new IOException("This implementation does not support noncontiguous arguments");
-						
+							throw new IOException(
+									"This implementation does not support noncontiguous arguments");
+
 						zstack.push(new Integer(framepc));
-						
+
 						if (version > 3) {
 							argcount = 0;
 							while (lastargmask != 0) {
-								argcount++;	
-								lastargmask = (byte)(lastargmask & (lastargmask - 1));		
+								argcount++;
+								lastargmask = (byte) (lastargmask & (lastargmask - 1));
 							}
 							zstack.push(new Integer(argcount));
 						}
-						
+
 						zstack.push(lastlocals);
 					}
-					
+
 					lastargmask = argmask;
 					lastlocals = framelocals;
-					
+
 					/* push the evaluation stack */
 					for (i = 0; i < evalwords; i++)
 						zstack.push(new Integer(infile.readShort()));
-						
+
 					frameno++;
 				}
 				this.locals = lastlocals;
 				if (version > 3) {
 					argcount = 0;
 					while (lastargmask != 0) {
-						argcount++;	
-						lastargmask = (byte)(lastargmask & (lastargmask - 1));		
+						argcount++;
+						lastargmask = (byte) (lastargmask & (lastargmask - 1));
 					}
 					this.argcount = argcount;
 				}
@@ -267,42 +281,32 @@ immutable.	But the arrays aren't, so don't mess with them */
 			}
 			infile.close();
 		}
-		
-		catch (IOException excpt)
-		{
+
+		catch (IOException excpt) {
 			System.err.println(excpt);
 			try {
 				if (infile != null)
 					infile.close();
+			} catch (IOException excpt2) {
 			}
-			catch (IOException excpt2) {
-			}
-		}
-		catch (IFFChunkNotFoundException cnfexcpt)
-		{
+		} catch (IFFChunkNotFoundException cnfexcpt) {
 			System.err.println(cnfexcpt);
 			try {
 				if (infile != null)
 					infile.close();
+			} catch (IOException cnfexcpt2) {
 			}
-			catch (IOException cnfexcpt2) {
-			}
-		}
-		catch (SecurityException sexcpt)
-		{
+		} catch (SecurityException sexcpt) {
 			System.err.println(sexcpt);
 			try {
 				if (infile != null)
 					infile.close();
+			} catch (IOException sexcpt2) {
+			} catch (SecurityException sexcpt3) {
 			}
-			catch (IOException sexcpt2) {
-			}
-			catch (SecurityException sexcpt3) {
-			}
-		}
-		finally {
+		} finally {
 			if (!returnvalue) {
-				infile = null;			
+				infile = null;
 				dynamic = null;
 				zstack = null;
 				framelocals = null;
@@ -312,11 +316,11 @@ immutable.	But the arrays aren't, so don't mess with them */
 		}
 		return returnvalue;
 	}
-	
+
 	private void write_cmem_chunk(IFFOutputFile outfile) throws IOException {
 		int i;
 		int runsize;
-		
+
 		outfile.openChunk("CMem");
 		runsize = 0;
 		for (i = 0; i < zm.header.static_base(); i++) {
@@ -326,23 +330,23 @@ immutable.	But the arrays aren't, so don't mess with them */
 				while (runsize > 0) {
 					outfile.writeByte(0);
 					if (runsize >= 256) {
-						outfile.writeByte((byte)255);
+						outfile.writeByte((byte) 255);
 						runsize -= 256;
-					}
-					else {
-						outfile.writeByte((byte)(runsize - 1));
+					} else {
+						outfile.writeByte((byte) (runsize - 1));
 						runsize = 0;
 					}
 				}
-				outfile.writeByte(zm.memory_image[i] ^ zm.restart_state.dynamic[i]);
+				outfile.writeByte(zm.memory_image[i]
+						^ zm.restart_state.dynamic[i]);
 			}
 		}
 		outfile.closeChunk();
 	}
-	
+
 	public boolean disk_save(Frame parentframe, int save_pc) {
 		String fname;
-		Enumeration<Object> e,f;
+		Enumeration<Object> e, f;
 		Object el, el2;
 		int i;
 		IFFOutputFile outfile = null;
@@ -361,27 +365,33 @@ immutable.	But the arrays aren't, so don't mess with them */
 		try {
 			fname = get_save_file_name(parentframe);
 			if (fname.equals("") || fname.equals("nullnull"))
-				throw new java.io.IOException("No file picked"); /* user didn't pick a file */
-				
+				throw new java.io.IOException("No file picked"); /*
+																 * user didn't
+																 * pick a file
+																 */
+
 			outfile = new IFFOutputFile(fname, "IFZS");
 			outfile.openChunk("IFhd");
 			outfile.write(zm.memory_image, ZHeader.RELEASE, 2);
 			outfile.write(zm.memory_image, ZHeader.SERIAL_NUMBER, 6);
 			outfile.write(zm.memory_image, ZHeader.FILE_CHECKSUM, 2);
-			outfile.writeByte((save_pc&0xFF0000) >>> 16);
-			outfile.writeShort(save_pc&0xFFFF);
+			outfile.writeByte((save_pc & 0xFF0000) >>> 16);
+			outfile.writeShort(save_pc & 0xFFFF);
 			outfile.closeChunk();
-//			outfile.openChunk("UMem");
-//			outfile.write(zm.memory_image, 0, zm.header.static_base());
-//			outfile.closeChunk();
+			// outfile.openChunk("UMem");
+			// outfile.write(zm.memory_image, 0, zm.header.static_base());
+			// outfile.closeChunk();
 			write_cmem_chunk(outfile);
 			outfile.openChunk("Stks");
 			version = zm.header.version();
-			
-			f = zm.zstack.elements();  /* a horrid kludge to get stuff from the next stack frame */
+
+			f = zm.zstack.elements(); /*
+									 * a horrid kludge to get stuff from the
+									 * next stack frame
+									 */
 
 			while (f.hasMoreElements()) { /* skip the first framebound */
-				el2 = f.nextElement(); 
+				el2 = f.nextElement();
 				if (el2 instanceof ZFrameBound)
 					break;
 			}
@@ -389,39 +399,42 @@ immutable.	But the arrays aren't, so don't mess with them */
 			e = zm.zstack.elements();
 			el = null;
 			el2 = null;
-			
+
 			/* write the dummy frame */
 			outfile.writeByte(0); /* PC high */
 			outfile.writeShort(0); /* PC low */
 			outfile.writeByte(0); /* flags */
 			outfile.writeByte(0); /* storevar */
 			outfile.writeByte(0); /* argmask */
-			
+
 			evalstackloc = outfile.getFilePointer();
-			outfile.writeShort((short)0);
+			outfile.writeShort((short) 0);
 			i = 0;
 			while (e.hasMoreElements()) {
 				el = e.nextElement();
 				if (el instanceof ZFrameBound)
 					break;
-				outfile.writeShort((short)(((Integer)el).intValue()));
+				outfile.writeShort((short) (((Integer) el).intValue()));
 				i++;
 			}
 			placeholder = outfile.getFilePointer();
 			outfile.seek(evalstackloc);
-			outfile.writeShort((short)i);
+			outfile.writeShort((short) i);
 			outfile.seek(placeholder);
-			
+
 			while (e.hasMoreElements()) {
 				if (f.hasMoreElements()) {
 					do {
 						el2 = f.nextElement();
-					}
-					while (f.hasMoreElements() && !(el2 instanceof ZFrameBound));
+					} while (f.hasMoreElements()
+							&& !(el2 instanceof ZFrameBound));
 				}
-				
-				if (f.hasMoreElements()) { /* get the stuff from the next stack frame */
-					if (((ZFrameBound)el2).isstore())
+
+				if (f.hasMoreElements()) { /*
+											 * get the stuff from the next stack
+											 * frame
+											 */
+					if (((ZFrameBound) el2).isstore())
 						el2 = f.nextElement(); /* skip the storevar */
 					if (version > 3) { /* breaks my object-orientation */
 						el2 = f.nextElement(); /* skip the opcode number */
@@ -430,60 +443,56 @@ immutable.	But the arrays aren't, so don't mess with them */
 
 					if (version > 3) {
 						el2 = f.nextElement();
-						argcount = (short)(((Integer)el2).intValue());
-					}
-					else {
+						argcount = (short) (((Integer) el2).intValue());
+					} else {
 						argcount = 4; /* doesn't really matter for V3 */
 					}
-					
+
 					el2 = f.nextElement();
-					locals = (short [])el2;
-				}
-				else { /* get it from the running Z-machine state */
+					locals = (short[]) el2;
+				} else { /* get it from the running Z-machine state */
 					if (version > 3) {
-						argcount = (((ZMachine5)zm).argcount);
-					}
-					else {
+						argcount = (((ZMachine5) zm).argcount);
+					} else {
 						argcount = 4; /* doesn't really matter for V3 */
 					}
 					locals = zm.locals;
 				}
-			
-				numlocals =  (short)locals.length;
+
+				numlocals = (short) locals.length;
 				if ((version <= 3) && (numlocals < argcount))
 					argcount = numlocals;
 
-				framestore = ((ZFrameBound)el).isstore();
+				framestore = ((ZFrameBound) el).isstore();
 				if (framestore) {
 					el = e.nextElement();
-					storevar = (short)(((Integer)el).intValue());
-				}
-				else
+					storevar = (short) (((Integer) el).intValue());
+				} else
 					storevar = 0;
-				
+
 				if (version > 3) { /* breaks my object-orientation */
 					el = e.nextElement(); /* skip the opcode number */
 				}
 
 				el = e.nextElement(); /* get the program counter */
-				framepc = ((Integer)el).intValue();
+				framepc = ((Integer) el).intValue();
 
 				if (version > 3) {
 					el = e.nextElement(); /* skip the argcount */
 				}
 				el = e.nextElement(); /* skip the locals */
 
-				frameflags = (byte)numlocals;
+				frameflags = (byte) numlocals;
 				if (!framestore)
 					frameflags |= QUETZAL_PROCEDURE; /* procedure flag */
-				argmask = (byte)((1<<argcount) - 1);
-				outfile.writeByte((framepc&0xFF0000) >>> 16);
-				outfile.writeShort(framepc&0xFFFF);
+				argmask = (byte) ((1 << argcount) - 1);
+				outfile.writeByte((framepc & 0xFF0000) >>> 16);
+				outfile.writeShort(framepc & 0xFFFF);
 				outfile.writeByte(frameflags);
-				outfile.writeByte((byte)storevar);
+				outfile.writeByte((byte) storevar);
 				outfile.writeByte(argmask);
 				evalstackloc = outfile.getFilePointer();
-				outfile.writeShort((short)0);
+				outfile.writeShort((short) 0);
 				for (i = 0; i < numlocals; i++) {
 					outfile.writeShort(locals[i]);
 				}
@@ -492,37 +501,30 @@ immutable.	But the arrays aren't, so don't mess with them */
 					el = e.nextElement();
 					if (el instanceof ZFrameBound)
 						break;
-//					System.err.println("el = " + el);
-					outfile.writeShort((short)(((Integer)el).intValue()));
+					// System.err.println("el = " + el);
+					outfile.writeShort((short) (((Integer) el).intValue()));
 					i++;
 				}
 				placeholder = outfile.getFilePointer();
 				outfile.seek(evalstackloc);
-				outfile.writeShort((short)i);
+				outfile.writeShort((short) i);
 				outfile.seek(placeholder);
 			}
 			outfile.closeChunk();
 			outfile.close();
 			returnvalue = true;
-		}
-		catch (IOException excpt)
-		{
+		} catch (IOException excpt) {
 			try {
 				if (outfile != null)
 					outfile.close();
+			} catch (IOException excpt2) {
 			}
-			catch (IOException excpt2) {
-			}
-		}
-		catch (SecurityException sexcpt)
-		{
+		} catch (SecurityException sexcpt) {
 			try {
 				if (outfile != null)
 					outfile.close();
-			}
-			catch (IOException sexcpt2) {
-			}
-			catch (SecurityException sexcpt3) {
+			} catch (IOException sexcpt2) {
+			} catch (SecurityException sexcpt3) {
 			}
 		}
 		return returnvalue;

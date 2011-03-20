@@ -10,10 +10,9 @@ import org.zplet.screenmodel.ZStatus;
 import org.zplet.screenmodel.ZWindow;
 import org.zplet.zmachine.*;
 
-
 public class ZMachine3 extends ZMachine {
 
-	public ZMachine3(ZScreen screen, ZStatus status_line, byte [] memory_image) {
+	public ZMachine3(ZScreen screen, ZStatus status_line, byte[] memory_image) {
 		super(screen, status_line, memory_image);
 
 		header = new ZHeader3(memory_image);
@@ -30,31 +29,29 @@ public class ZMachine3 extends ZMachine {
 
 	@Override
 	public void update_status_line() {
-		ZHeader3 header = (ZHeader3)this.header;
-		
+		ZHeader3 header = (ZHeader3) this.header;
+
 		status_redirect = true;
 		status_location = "";
-		print_string(objects.short_name_addr(get_variable((short)16)));
+		print_string(objects.short_name_addr(get_variable((short) 16)));
 		status_redirect = false;
 		if (header.time_game())
 			status_line.update_time_line(status_location,
-										 get_variable((short)17),
-										 get_variable((short)18));
+					get_variable((short) 17), get_variable((short) 18));
 		else
 			status_line.update_score_line(status_location,
-										  get_variable((short)17),
-										  get_variable((short)18));
+					get_variable((short) 17), get_variable((short) 18));
 		status_location = null;
 	}
 
 	@Override
 	public int string_address(short addr) {
-		return ((addr)&0xFFFF) << 1;
+		return ((addr) & 0xFFFF) << 1;
 	}
 
 	@Override
 	public int routine_address(short addr) {
-		return ((addr)&0xFFFF) << 1;
+		return ((addr) & 0xFFFF) << 1;
 	}
 
 	@Override
@@ -62,16 +59,16 @@ public class ZMachine3 extends ZMachine {
 
 		super.restart();
 
-		window[0].moveto(0,0);
-		window[1].moveto(0,0);
-		window[0].resize(screen.getchars(),screen.getlines());
-		window[1].resize(0,0);
-		window[0].movecursor(0,window[0].getHeight()-1);
+		window[0].moveto(0, 0);
+		window[1].moveto(0, 0);
+		window[0].resize(screen.getchars(), screen.getlines());
+		window[1].resize(0, 0);
+		window[0].movecursor(0, window[0].getHeight() - 1);
 	}
 
 	@Override
 	public void set_header_flags() { /* at start, restart, restore */
-		ZHeader3 header = (ZHeader3)this.header;
+		ZHeader3 header = (ZHeader3) this.header;
 
 		super.set_header_flags();
 		header.set_status_unavailable(false);

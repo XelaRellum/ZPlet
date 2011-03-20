@@ -81,4 +81,3 @@ public class ZColor {
 		return Z_BLACK;
 	}
 }
-

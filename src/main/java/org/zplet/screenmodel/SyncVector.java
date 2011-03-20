@@ -20,19 +20,23 @@ class SyncVector extends Vector<Object> {
 	public synchronized Object syncPopFirstElement() {
 		Object first = syncFirstElement();
 		if (first != null)
-				removeElementAt(0);
+			removeElementAt(0);
 		return first;
 	}
-	
+
 	public synchronized Object syncFirstElement() {
 		Object first = null;
 		try {
 			first = super.firstElement();
-		} catch (NoSuchElementException booga) {}
+		} catch (NoSuchElementException booga) {
+		}
 		try {
-			if (first==null) wait();
-			else return first;
-		} catch (InterruptedException booga) {}
+			if (first == null)
+				wait();
+			else
+				return first;
+		} catch (InterruptedException booga) {
+		}
 		return null;
 	}
 
@@ -41,4 +45,3 @@ class SyncVector extends Vector<Object> {
 		notify();
 	}
 }
-

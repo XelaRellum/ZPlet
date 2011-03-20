@@ -7,46 +7,38 @@ package org.zplet.zmachine.zmachine3;
 
 import org.zplet.zmachine.ZHeader;
 
-class ZHeader3 extends ZHeader
-{
+class ZHeader3 extends ZHeader {
 	final static int FILE_LENGTH_FACTOR = 2;
 
-	ZHeader3 (byte [] memory_image)
-	{
+	ZHeader3(byte[] memory_image) {
 		this.memory_image = memory_image;
 	}
 
 	public boolean time_game() /* as opposed to score game */
 	{
-		return ((memory_image[FLAGS1]&0x02) == 2);
+		return ((memory_image[FLAGS1] & 0x02) == 2);
 	}
-	
-	public void set_status_unavailable(boolean unavail) 
-	{
+
+	public void set_status_unavailable(boolean unavail) {
 		if (unavail) {
 			memory_image[FLAGS1] |= 0x10;
-		}
-		else {
+		} else {
 			memory_image[FLAGS1] &= 0xEF;
 		}
 	}
 
-	public void set_splitting_available(boolean avail)
-	{
+	public void set_splitting_available(boolean avail) {
 		if (avail) {
 			memory_image[FLAGS1] |= 0x20;
-		}
-		else {
+		} else {
 			memory_image[FLAGS1] &= 0xDF;
 		}
 	}
 
-	public void set_variable_default(boolean variable)
-	{
+	public void set_variable_default(boolean variable) {
 		if (variable) {
 			memory_image[FLAGS1] |= 0x40;
-		}
-		else {
+		} else {
 			memory_image[FLAGS1] &= 0xBF;
 		}
 	}
@@ -54,10 +46,8 @@ class ZHeader3 extends ZHeader
 	@Override
 	public int file_length() {
 		int packed_length;
-		
-		packed_length = (((memory_image[FILE_LENGTH]&0xFF)<<8) |
-					   (memory_image[FILE_LENGTH+1]&0xFF));
+
+		packed_length = (((memory_image[FILE_LENGTH] & 0xFF) << 8) | (memory_image[FILE_LENGTH + 1] & 0xFF));
 		return packed_length * FILE_LENGTH_FACTOR;
 	}
 }
-

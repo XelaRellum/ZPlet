@@ -24,7 +24,7 @@ public class ZStatus extends Panel {
 		 Label Left;
 		
 		 public ZStatus() {
-				 setLayout(new BorderLayout());
+				 setLayout(new BorderdoLayout());
 				 Right = new Label();
 				 add("East", Right);
 				 Left = new Label();
@@ -53,7 +53,7 @@ public class ZStatus extends Panel {
 				 this.turns = turns;
 				 Left.setText(location);
 				 Right.setText(score + "/" + turns);
-				 layout();
+				 doLayout();
 				 repaint();
 		 }
 		
@@ -78,7 +78,7 @@ public class ZStatus extends Panel {
 								 hours = 12;
 						 Right.setText(hours + ":" + minutes + meridiem);
 				 }
-				 layout();
+				 doLayout();
 				 repaint();
 		 }
 		

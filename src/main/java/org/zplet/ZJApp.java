@@ -57,7 +57,7 @@ public class ZJApp extends Frame {
 								pzcodefile = argv[i];
 				}
 				myz = new ZJApp(pzcodefile, pstatusfg, pstatusbg, pmainfg, pmainbg);
-				System.err.println( "Location = " + myz.bounds().x + " " +  myz.bounds().y);
+				System.err.println( "Location = " + myz.getBounds().x + " " +  myz.getBounds().y);
 //				myz.move(0,40);
 				System.err.println( "Parent = " + myz.getParent());
 				myz.setTitle("ZJApp");

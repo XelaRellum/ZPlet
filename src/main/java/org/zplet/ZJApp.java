@@ -62,7 +62,7 @@ public class ZJApp extends Frame {
 				System.err.println( "Parent = " + myz.getParent());
 				myz.setTitle("ZJApp");
 				myz.pack();
-				myz.show();
+				myz.setVisible(true);
 				myz.start();
 		}
 
@@ -198,7 +198,7 @@ public class ZJApp extends Frame {
 		public void start() {
 				if (zcodefile == null) {
 						FileDialog fd = new FileDialog(this, "Select game file", FileDialog.LOAD);
-						fd.show();
+						fd.setVisible(true);
 						zcodefile = (new File(fd.getDirectory(), fd.getFile())).getAbsolutePath();
 				}				
 				if (!failed && ((zm==null) || !zm.isAlive())) {

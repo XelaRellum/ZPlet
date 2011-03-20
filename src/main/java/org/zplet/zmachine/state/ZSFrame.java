@@ -37,7 +37,7 @@ class ZSFrame extends Frame {
 	{
 		if (!ran) {
 			fd = new FileDialog(this, "Save game as...", boxtype);
-			fd.show();
+			fd.setVisible(true);
 		}
 		ran = true;
 		if (blockedthread != null)

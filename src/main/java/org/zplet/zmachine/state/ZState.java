@@ -68,7 +68,7 @@ immutable.	But the arrays aren't, so don't mess with them */
 
 		try {
 			fd = new FileDialog(parentframe, "Save game as...", FileDialog.SAVE);
-			fd.show();
+			fd.setVisible(true);
 			Toolkit.getDefaultToolkit().sync();
 			returnval = fd.getDirectory() + fd.getFile();
 		}
@@ -85,7 +85,7 @@ immutable.	But the arrays aren't, so don't mess with them */
 
 		try {
 			fd = new FileDialog(parentframe, "Restore game from...", FileDialog.LOAD);
-			fd.show();
+			fd.setVisible(true);
 			Toolkit.getDefaultToolkit().sync();
 			returnval = fd.getDirectory() + fd.getFile();
 		}

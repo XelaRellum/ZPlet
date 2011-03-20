@@ -33,7 +33,7 @@ class ZSFrame extends Frame {
 		this.boxtype = boxtype;
 	}
 
-	public boolean handleEvent(Event evt)
+	public void processEvent(AWTEvent evt)
 	{
 		if (!ran) {
 			fd = new FileDialog(this, "Save game as...", boxtype);
@@ -42,7 +42,7 @@ class ZSFrame extends Frame {
 		ran = true;
 		if (blockedthread != null)
 			blockedthread.resume();
-		return super.handleEvent(evt);
+		super.processEvent(evt);
 	}
 
 	public String getFile() {

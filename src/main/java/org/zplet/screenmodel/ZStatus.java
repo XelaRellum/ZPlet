@@ -24,7 +24,7 @@ public class ZStatus extends Panel {
 		 Label Left;
 		
 		 public ZStatus() {
-				 setLayout(new BorderdoLayout());
+				 setLayout(new BorderLayout());
 				 Right = new Label();
 				 add("East", Right);
 				 Left = new Label();

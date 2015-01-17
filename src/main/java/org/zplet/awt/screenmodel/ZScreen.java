@@ -110,12 +110,7 @@ public class ZScreen extends Canvas {
 	}
 
 	public ZScreen(String font_family, int font_size) {
-		Dimension mysize = getSize();
-
 		this.setFixedFont(font_family, font_size);
-		fixedmetrics = getFontMetrics(fixedfont);
-		chars = mysize.width / fixedmetrics.charWidth(' ');
-		lines = mysize.height / fixedmetrics.getHeight();
 
 		inputcodes = new SyncVector();
 		bufferedcodes = new Vector<Integer>();
@@ -356,9 +351,13 @@ public class ZScreen extends Canvas {
 	 *            the point size of the font (int).
 	 */
 	public synchronized void setFixedFont(String font_family, int font_size) {
+		Dimension mysize = getSize();
 		if (font_size <= 0)
 			font_size = DEFAULT_FONT_SIZE;
 		this.fixedfont = new Font(font_family, Font.PLAIN, font_size);
+		fixedmetrics = getFontMetrics(fixedfont);
+		chars = mysize.width / fixedmetrics.charWidth(' ');
+		lines = mysize.height / fixedmetrics.getHeight();
 	}
 
 	/**

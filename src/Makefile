@@ -1,10 +1,15 @@
 #JCFLAGS = -target 1.1 #(is default)
 
-zplet:
-	javac $(JCFLAGS) -sourcepath $(PWD) -d ../classes russotto/zplet/Zplet.java
+all: zplet zjapp
 
-zjapp:
-	javac $(JCFLAGS) -sourcepath $(PWD) -d ../classes russotto/zplet/ZJApp.java
+../classes:
+	mkdir -p ../classes
+
+zplet: ../classes
+	javac $(JCFLAGS) -sourcepath $(PWD)/main/java -d ../classes main/java/org/zplet/Zplet.java
+
+zjapp: ../classes
+	javac $(JCFLAGS) -sourcepath $(PWD)/main/java -d ../classes main/java/org/zplet/ZJApp.java
 
 clean:
 	find ../classes -type f -exec rm "{}" \;	

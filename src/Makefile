@@ -11,6 +11,9 @@ zplet: ../classes
 zjapp: ../classes
 	javac $(JCFLAGS) -sourcepath $(PWD)/main/java -d ../classes main/java/org/zplet/ZJApp.java
 
+zplet.jar: zplet zjapp
+	cd ../classes && jar cvfm ../$@ ../manifest.txt org/zplet/*.class org/zplet/*/*.class org/zplet/*/*/*.class $(EXTRAJARFILES)
+
 clean:
 	find ../classes -type f -exec rm "{}" \;	
 	find . -name "*~" -exec rm "{}" \;

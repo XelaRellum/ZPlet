@@ -6,6 +6,8 @@
 package org.zplet;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.*;
 import java.io.*;
 
@@ -61,6 +63,13 @@ public class ZJApp extends Frame {
 				+ myz.getBounds().y);
 		// myz.move(0,40);
 		System.err.println("Parent = " + myz.getParent());
+
+		myz.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+
 		myz.setTitle("ZJApp");
 		myz.pack();
 		myz.setVisible(true);

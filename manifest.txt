@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Application-Name: Zplet
+Specification-Title: Zplet
+Specification-Version: 0.1
+Specification-Vendor: zplet.org
+Implementation-Title: Zplet
+Implementation-Version: 0.1
+Implementation-Vendor: zplet.org
+Main-Class: org.zplet.ZJApp
+Permissions: sandbox

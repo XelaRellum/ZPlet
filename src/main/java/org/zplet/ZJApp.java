@@ -111,9 +111,14 @@ public class ZJApp extends Frame {
 		zmemimage = null;
 		try {
 			System.err.println(zcodefile);
-			myzzurl = new URL(zcodefile);
-			myzstream = myzzurl.openStream();
-			zmemimage = suckstream(myzstream);
+			myzzurl = getClass().getClassLoader().getResource(zcodefile);
+			if (myzzurl == null) {
+				myzzurl = new URL(zcodefile);
+			}
+			if (myzzurl != null) {
+				myzstream = myzzurl.openStream();
+				zmemimage = suckstream(myzstream);
+			}
 		} catch (MalformedURLException booga) {
 			try {
 				myzstream = new FileInputStream(zcodefile);
